@@ -46,8 +46,8 @@ Once the public IP is obtained the function can be invoked to **SET** the DNS re
 ```JSON
 {
     "execution_mode": "set",
-    "ddns_hostname": "'www.example.com'",
-    "validation_hash": "'1234567890ABCDEFGH'"
+    "ddns_hostname": "www.example.com",
+    "validation_hash": "1234567890ABCDEFGH"
 }
 
 ```
@@ -76,7 +76,7 @@ will return:
 
 ## dyndns.sh bash script
 
-In this repository is included a bash script: [dyndsn.sh](dyndns.sh) to programmatically invoke the Lambda function using **CURL**
+In this repository is included a bash script: [dyndns.sh](dyndns.sh) to programmatically invoke the Lambda function using **CURL**
 
 When using [newrecord.py](newrecord.py) script to create the configuration, all the flags will be provided to run [dyndns.sh](dyndns.sh), i.e.:
 
@@ -113,8 +113,7 @@ It will return the following if successful:
 ```JSON
 {
     "return_status": "success",
-    "return_message": "www.example.com has been updated to 11.12.13.14",
-    "status_code": "201"
+    "return_message": "www.example.com has been updated to 11.12.13.14"
 }
 ```
 
@@ -123,8 +122,7 @@ If the hostname already matches the public IP it will return:
 ```JSON
 {
     "return_status": "success",
-    "return_message": "Your IP address matches the current Route53 DNS record.",
-    "status_code": "200"
+    "return_message": "Your IP address matches the current Route53 DNS record."
 }
 ```
 
@@ -132,13 +130,12 @@ If the hostname already matches the public IP it will return:
 
 `HTTP 403 Status code`
 
-> **_There was an issue finding or reading <www.example.com> configuration from dynamoDB table: DyndnsStack-_**
+> **_Configuration not found for www.example.com_**
 
 ```JSON
 {
     "return_status": "fail",
-    "return_message": "There was an issue finding or reading www.example.com configuration from dynamoDB table: DyndnsStack-dyndnsdb12345-ABC0000",
-    "status_code": "403"
+    "return_message": "Configuration not found for www.example.com"
 }
 ```
 
@@ -166,7 +163,7 @@ If the hostname already matches the public IP it will return:
 
 Ensure the hash is generated using a string containing:
 
-- The correct public IP address returned by _./dyndsn.sh -m get_
+- The correct public IP address returned by _./dyndns.sh -m get_
 - The correct host, i.e.: *<www.example.com>*
 - A string matching the _shared_secret_ JSON parameter in the **data** attribute in DynamoDB
 - Ensure the hashed string had the 3 parameters in the right order: IP HOST SECRET\
