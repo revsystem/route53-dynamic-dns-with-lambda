@@ -8,7 +8,7 @@
     "host": "acs5cl2b2xjj7mijteo3krrxk40cfgmp.lambda-url.eu-west-1.on.aws",
     "x-forwarded-port": "443",
     "content-type": "application/json",
-    "x-forwarded-for": "2a00:23c4:8002:6901:99b0:6689:389f:63ed",
+    "x-forwarded-for": "203.0.113.1",
     "accept": "*/*",
     "user-agent": "curl/7.79.1"
   },
@@ -27,7 +27,7 @@
       "path": "/",
       "protocol": "HTTP/1.1",
       "method": "POST",
-      "sourceIp": "2a00:23c4:8002:6901:99b0:6689:389f:63ed",
+      "sourceIp": "203.0.113.1",
       "userAgent": "curl/7.79.1"
     },
     "time": "28/Nov/2022:15:30:57 +0000",
