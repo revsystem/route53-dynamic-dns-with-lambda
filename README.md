@@ -158,3 +158,71 @@ _newrecord.py_ provides all the flags to successfully run the script:
 ```
 
 More information on how to invoke the Lambda URL can be found here: [invocation.md](invocation.md)
+
+## Managing DNS Records
+
+To view, update, or delete an existing DNS record configuration, use the included [managerecord.py](managerecord.py) script.
+(Execute this script for each hostname to be managed)
+
+> `python3 managerecord.py <subcommand> <hostname>`
+
+The DynamoDB table name is resolved automatically from the CloudFormation stack — no manual lookup is required.
+
+### Show the current configuration
+
+> `python3 managerecord.py show www.example.com`
+
+The script will display the DynamoDB configuration and the current Route 53 record:
+
+```
+Hostname        : www.example.com
+Hosted zone ID  : ZYZ12345678901234
+TTL             : 60
+Secret          : ********
+Current IP      : 203.0.113.1
+Route 53 TTL    : 60
+```
+
+### Update TTL immediately
+
+The Lambda function only updates the Route 53 record when the public IP address changes. If the TTL is changed in DynamoDB via [newrecord.py](newrecord.py), the new value is not reflected in Route 53 until the next IP change.
+
+To apply a new TTL right away without waiting for an IP change:
+
+> `python3 managerecord.py update-ttl www.example.com 300`
+
+The script will display the current and new TTL, then prompt for confirmation:
+
+```
+Hostname        : www.example.com
+Current TTL     : 60  -->  New TTL: 300
+Current IP      : 203.0.113.1
+
+Do you want to continue? (y/n)
+```
+
+Type `y` to update both the Route 53 record and the DynamoDB configuration.
+
+### Delete a record
+
+To delete the DynamoDB configuration only:
+
+> `python3 managerecord.py delete www.example.com`
+
+To delete both the DynamoDB configuration and the Route 53 DNS record:
+
+> `python3 managerecord.py delete --also-route53 www.example.com`
+
+The script will display the record to be deleted and prompt for confirmation before making any changes:
+
+```
+Hostname        : www.example.com
+Hosted zone ID  : ZYZ12345678901234
+Route 53 record will also be deleted.
+
+Do you want to continue? (y/n)
+```
+
+Type `y` to confirm.
+
+> If the DynamoDB record has already been deleted, running `delete --also-route53` will still locate and remove the Route 53 record by resolving the hosted zone from the hostname.
