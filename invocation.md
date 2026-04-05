@@ -140,6 +140,10 @@ If the hostname already matches the public IP it will return:
 ```
 
 - **Validate the DynamoDB configuration**\
+    Use [managerecord.py](managerecord.py) to inspect the stored configuration:
+
+    > `python3 managerecord.py show www.example.com`
+
     Is the configuration present for "www.example.com"?\
     Is the _hostname_ attribute typed correctly?\
     Does the _data_ attribute contain a valid **JSON** configuration (i.e. [www.example.com.json](www.example.com.json)) ?
@@ -193,6 +197,10 @@ A new configuration can be created using [newrecord.py](newrecord.py)
 > **_An error occurred (NoSuchHostedZone) when calling the ListResourceRecordSets operation: No hosted zone found with ID: Z123456ABABO1ABC10A_**
 
 The Host Zone ID (i.e. `Z123456ABABO1ABC10A`) is incorrect, if the Hosted Zone ID doesn't exist, create it, if it exists verify that the Hosted Zone ID is correctly saved in the DynamoDB configuration.
+
+Use [managerecord.py](managerecord.py) to inspect the stored Hosted Zone ID:
+
+> `python3 managerecord.py show www.example.com`
 
 A new configuration can be created using [newrecord.py](newrecord.py)
 
